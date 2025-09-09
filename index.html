@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Datos migratorios 1907–1931</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <meta
+            name="description"
+            content="Visualización estática y responsive de datos migratorios (1907–1931) con Tailwind CSS y Chart.js"
+        />
+        <style>
+            /* Evita que los gráficos se desborden y facilita el responsive */
+            .chart-wrap {
+                position: relative;
+            }
+        </style>
+    </head>
+    <body class="bg-zinc-50 text-zinc-900 antialiased">
+        <header class="bg-white shadow-sm sticky top-0 z-30">
+            <div
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between"
+            >
+                <h1 class="text-2xl md:text-3xl font-bold tracking-tight">
+                    Datos migratorios
+                    <span class="text-zinc-500">1907–1931</span>
+                </h1>
+                <nav class="text-sm text-zinc-600">
+                    <a href="#resumen" class="hover:text-zinc-900">Resumen</a>
+                    <span class="mx-2">·</span>
+                    <a href="#nacimientos" class="hover:text-zinc-900"
+                        >Nacimientos</a
+                    >
+                    <span class="mx-2">·</span>
+                    <a href="#migraciones" class="hover:text-zinc-900"
+                        >Migraciones</a
+                    >
+                    <span class="mx-2">·</span>
+                    <a href="#estado-civil" class="hover:text-zinc-900"
+                        >Estado civil</a
+                    >
+                    <span class="mx-2">·</span>
+                    <a href="#profesiones" class="hover:text-zinc-900"
+                        >Profesiones</a
+                    >
+                    <span class="mx-2">·</span>
+                    <a href="#asentamientos" class="hover:text-zinc-900"
+                        >Asentamientos</a
+                    >
+                    <span class="mx-2">·</span>
+                    <a href="#proveniencia" class="hover:text-zinc-900"
+                        >Lugar de Origen</a
+                    >
+                </nav>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+            <!-- Resumen -->
+            <section id="resumen" class="space-y-4">
+                <h2 class="text-xl md:text-2xl font-semibold">Resumen</h2>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+                >
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">
+                            Cantidad de registros migratorios
+                        </h3>
+                        <p class="text-3xl font-extrabold mt-1">
+                            2860
+                            <span class="text-base font-medium text-zinc-500"
+                                >registros</span
+                            >
+                        </p>
+                    </article>
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">
+                            Lugar con mayor cantidad de asentamientos
+                        </h3>
+                        <p class="mt-2 text-zinc-800">
+                            <span class="font-semibold">Bariloche</span> → 539
+                            personas
+                        </p>
+                    </article>
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">
+                            La mayoría provenia de
+                        </h3>
+                        <p class="mt-2 text-zinc-800">
+                            <span class="font-semibold">Temuco</span> → 205
+                            personas
+                        </p>
+                    </article>
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">
+                            Profesión más comun
+                        </h3>
+                        <p class="mt-2 text-zinc-800">
+                            <span class="font-semibold">Jornalero</span> → 1015
+                            personas
+                        </p>
+                    </article>
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">Edad promedio</h3>
+                        <p class="text-3xl font-extrabold mt-1">
+                            29
+                            <span class="text-base font-medium text-zinc-500"
+                                >años</span
+                            >
+                        </p>
+                    </article>
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">Más longevo</h3>
+                        <p class="text-3xl font-extrabold mt-1">
+                            78
+                            <span class="text-base font-medium text-zinc-500"
+                                >años</span
+                            >
+                        </p>
+                    </article>
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">
+                            Año con más nacimientos
+                        </h3>
+                        <p class="mt-2 text-zinc-800">
+                            <span class="font-semibold">1905</span> → 682
+                            nacimientos
+                        </p>
+                    </article>
+                    <article class="bg-white rounded-2xl shadow p-5">
+                        <h3 class="text-sm text-zinc-500">
+                            Año con mayor migración
+                        </h3>
+                        <p class="mt-2 text-zinc-800">
+                            <span class="font-semibold">1913</span> → 331
+                            personas
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Nacimientos -->
+            <section id="nacimientos" class="space-y-4">
+                <div class="flex items-end justify-between">
+                    <h2 class="text-xl md:text-2xl font-semibold">
+                        Años con más nacimientos
+                    </h2>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-4">
+                    <div class="chart-wrap h-64 sm:h-72 md:h-80 lg:h-96">
+                        <canvas id="chartNacimientos"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Migraciones -->
+            <section id="migraciones" class="space-y-4">
+                <div class="flex items-end justify-between">
+                    <h2 class="text-xl md:text-2xl font-semibold">
+                        Años con más registros de migraciones
+                    </h2>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-4">
+                    <div class="chart-wrap h-72 md:h-80 lg:h-[28rem]">
+                        <canvas id="chartMigraciones"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estado civil -->
+            <section id="estado-civil" class="space-y-4">
+                <div class="flex items-end justify-between">
+                    <h2 class="text-xl md:text-2xl font-semibold">
+                        Estado civil
+                    </h2>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-4">
+                    <div class="chart-wrap h-64 md:h-72 lg:h-80">
+                        <canvas id="chartEstadoCivil"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profesiones -->
+            <section id="profesiones" class="space-y-4">
+                <div class="flex items-end justify-between">
+                    <h2 class="text-xl md:text-2xl font-semibold">
+                        Profesiones
+                    </h2>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-4">
+                    <div class="chart-wrap h-[32rem] md:h-[36rem]">
+                        <canvas id="chartProfesiones"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Asentamientos -->
+            <section id="asentamientos" class="space-y-4">
+                <div class="flex items-end justify-between">
+                    <h2 class="text-xl md:text-2xl font-semibold">
+                        Lugares donde más se asentaron
+                    </h2>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-4">
+                    <div class="chart-wrap h-[34rem] md:h-[38rem]">
+                        <canvas id="chartAsentamientos"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Proveniencia -->
+            <section id="proveniencia" class="space-y-4">
+                <div class="flex items-end justify-between">
+                    <h2 class="text-xl md:text-2xl font-semibold">
+                        ¿De dónde provenían?
+                    </h2>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-4">
+                    <div class="chart-wrap h-[32rem] md:h-[36rem]">
+                        <canvas id="chartProveniencia"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="border-t bg-white">
+            <div
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-zinc-500"
+            >
+                Archivos del Sur + Cooperativa de Trabajo Lawal + Consulado de
+                Chile
+            </div>
+        </footer>
+
+        <script>
+            // ----- Datos -----
+            const datosNacimientos = {
+                labels: ["1905", "1900", "1903"],
+                values: [682, 49, 10],
+            };
+
+            const datosMigraciones = {
+                labels: ["1913", "1919", "1920", "1924", "1925"],
+                values: [331, 196, 172, 167, 148],
+            };
+
+            const datosEstadoCivil = {
+                labels: ["Soltero", "Casado", "Viudo"],
+                values: [1247, 27, 26],
+            };
+
+            const datosProfesiones = {
+                labels: [
+                    "Jornalero",
+                    "Agricultor",
+                    "Criancero/Ganadero",
+                    "Empleado",
+                    "Campista",
+                ],
+                values: [1015, 764, 415, 38, 32],
+            };
+
+            const datosAsentamientos = {
+                labels: [
+                    "Bariloche",
+                    "Pichi Leufu",
+                    "El Bolsón",
+                    "Ñorquinco",
+                    "Comallo",
+                    "Las Bayas",
+                    "Pilcaniyeu",
+                    "Cholila",
+                    "Epuyén",
+                    "16 de Octubre",
+                ],
+                values: [539, 137, 125, 108, 91, 90, 72, 66, 43, 35],
+            };
+
+            const datosProveniencia = {
+                labels: [
+                    "Temuco",
+                    "Pitrufquén",
+                    "Osorno",
+                    "San Pablo",
+                    "Puerto Montt",
+                    "Victoria",
+                    "Lonquimay",
+                    "Boroa",
+                    "Chonchi",
+                    "Santa Bárbara",
+                ],
+                values: [205, 99, 95, 82, 68, 64, 54, 56, 47, 46],
+            };
+
+            // ----- Utilidad para crear datasets con estilos armonizados -----
+            function baseBarDataset(values) {
+                return {
+                    data: values,
+                    borderWidth: 1,
+                    // Colores suaves por defecto de Chart.js; sin establecer colores manuales
+                };
+            }
+
+            function mkBar(
+                ctx,
+                labels,
+                values,
+                { horizontal = false, title = "" } = {},
+            ) {
+                return new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels,
+                        datasets: [
+                            Object.assign(baseBarDataset(values), {
+                                label: title,
+                            }),
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: horizontal ? "y" : "x",
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { mode: "index", intersect: false },
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: { autoSkip: true },
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: "rgba(0,0,0,0.05)" },
+                            },
+                        },
+                    },
+                });
+            }
+
+            function mkDoughnut(ctx, labels, values, { title = "" } = {}) {
+                return new Chart(ctx, {
+                    type: "doughnut",
+                    data: {
+                        labels,
+                        datasets: [{ data: values }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: "bottom" },
+                            tooltip: { mode: "index", intersect: false },
+                        },
+                    },
+                });
+            }
+
+            // ----- Render -----
+            document.addEventListener("DOMContentLoaded", () => {
+                mkBar(
+                    document.getElementById("chartNacimientos"),
+                    datosNacimientos.labels,
+                    datosNacimientos.values,
+                    { title: "Nacimientos" },
+                );
+
+                mkBar(
+                    document.getElementById("chartMigraciones"),
+                    datosMigraciones.labels,
+                    datosMigraciones.values,
+                    { title: "Migraciones" },
+                );
+
+                mkDoughnut(
+                    document.getElementById("chartEstadoCivil"),
+                    datosEstadoCivil.labels,
+                    datosEstadoCivil.values,
+                    { title: "Estado civil" },
+                );
+
+                mkBar(
+                    document.getElementById("chartProfesiones"),
+                    datosProfesiones.labels,
+                    datosProfesiones.values,
+                    { title: "Profesiones", horizontal: true },
+                );
+
+                mkBar(
+                    document.getElementById("chartAsentamientos"),
+                    datosAsentamientos.labels,
+                    datosAsentamientos.values,
+                    { title: "Asentamientos", horizontal: true },
+                );
+
+                mkBar(
+                    document.getElementById("chartProveniencia"),
+                    datosProveniencia.labels,
+                    datosProveniencia.values,
+                    { title: "Proveniencia", horizontal: true },
+                );
+            });
+        </script>
+    </body>
+</html>
