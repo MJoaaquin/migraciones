@@ -18,43 +18,69 @@
         </style>
     </head>
     <body class="bg-zinc-50 text-zinc-900 antialiased">
-        <header class="bg-white shadow-sm sticky top-0 z-30">
-            <div
-                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between"
-            >
-                <h1 class="text-2xl md:text-3xl font-bold tracking-tight">
-                    Datos migratorios
-                    <span class="text-zinc-500">1907–1931</span>
-                </h1>
-                <nav class="text-sm text-zinc-600">
-                    <a href="#resumen" class="hover:text-zinc-900">Resumen</a>
-                    <span class="mx-2">·</span>
-                    <a href="#nacimientos" class="hover:text-zinc-900"
-                        >Nacimientos</a
-                    >
-                    <span class="mx-2">·</span>
-                    <a href="#migraciones" class="hover:text-zinc-900"
-                        >Migraciones</a
-                    >
-                    <span class="mx-2">·</span>
-                    <a href="#estado-civil" class="hover:text-zinc-900"
-                        >Estado civil</a
-                    >
-                    <span class="mx-2">·</span>
-                    <a href="#profesiones" class="hover:text-zinc-900"
-                        >Profesiones</a
-                    >
-                    <span class="mx-2">·</span>
-                    <a href="#asentamientos" class="hover:text-zinc-900"
-                        >Asentamientos</a
-                    >
-                    <span class="mx-2">·</span>
-                    <a href="#proveniencia" class="hover:text-zinc-900"
-                        >Lugar de Origen</a
-                    >
-                </nav>
+        <!-- Hero con imagen + degradado -->
+        <section class="relative h-48 sm:h-64 md:h-80 lg:h-[28rem]">
+            <div class="absolute inset-0">
+                <div
+                    class="h-full w-full bg-center bg-cover"
+                    style="background-image: url(&quot;header.jpg&quot;)"
+                ></div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent"
+                ></div>
+                <div
+                    class="absolute inset-0 bg-amber-900/20 mix-blend-multiply"
+                ></div>
             </div>
-        </header>
+            <div
+                class="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-end pb-6"
+            >
+                <div class="max-w-2xl">
+                    <h1
+                        class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-md"
+                    >
+                        Datos migratorios
+                        <span class="opacity-90 font-semibold">1907–1931</span>
+                    </h1>
+                    <p class="mt-2 text-white/90 drop-shadow">
+                        Archivos del Sur
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navbar -->
+        <nav class="bg-white shadow-sm sticky top-0 z-30">
+            <div
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap gap-3 items-center justify-center text-sm text-zinc-600"
+            >
+                <a href="#resumen" class="hover:text-zinc-900">Resumen</a>
+                <span class="hidden sm:inline">·</span>
+                <a href="#nacimientos" class="hover:text-zinc-900"
+                    >Nacimientos</a
+                >
+                <span class="hidden sm:inline">·</span>
+                <a href="#migraciones" class="hover:text-zinc-900"
+                    >Migraciones</a
+                >
+                <span class="hidden sm:inline">·</span>
+                <a href="#estado-civil" class="hover:text-zinc-900"
+                    >Estado civil</a
+                >
+                <span class="hidden sm:inline">·</span>
+                <a href="#profesiones" class="hover:text-zinc-900"
+                    >Profesiones</a
+                >
+                <span class="hidden sm:inline">·</span>
+                <a href="#asentamientos" class="hover:text-zinc-900"
+                    >Asentamientos</a
+                >
+                <span class="hidden sm:inline">·</span>
+                <a href="#proveniencia" class="hover:text-zinc-900"
+                    >Lugar de Origen</a
+                >
+            </div>
+        </nav>
 
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
             <!-- Resumen -->
