@@ -6,6 +6,10 @@
         <title>Archivos del Sur - Migraciones</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        />
         <meta
             name="description"
             content="Información migratoria entre los años 1907–1931 recolatada por Archivos del Sur"
@@ -55,6 +59,7 @@
                 class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap gap-3 items-center justify-center text-sm text-zinc-600"
             >
                 <a href="#resumen" class="hover:text-zinc-900">Resumen</a>
+                <a href="#mapas" class="hover:text-zinc-900">Mapas</a>
                 <span class="hidden sm:inline">·</span>
                 <a href="#nacimientos" class="hover:text-zinc-900"
                     >Nacimientos</a
@@ -166,6 +171,40 @@
                 </div>
             </section>
 
+            <!-- Mapa de flujos -->
+            <section id="mapas" class="space-y-4">
+                <div class="flex items-end justify-between">
+                    <h3 class="text-xl md:text-2xl font-semibold">
+                        Mapa de orígenes y asentamientos
+                    </h3>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-2xl shadow p-4">
+                        <h4 class="text-sm text-zinc-500 mb-2">
+                            Lugares de origen (Chile)
+                        </h4>
+                        <!-- Altura explícita para Leaflet -->
+                        <div
+                            id="mapOrigen"
+                            class="rounded-xl overflow-hidden h-96 md:h-[32rem]"
+                        ></div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow p-4">
+                        <h4 class="text-sm text-zinc-500 mb-2">
+                            Asentamientos (Argentina)
+                        </h4>
+                        <div
+                            id="mapDestino"
+                            class="rounded-xl overflow-hidden h-96 md:h-[32rem]"
+                        ></div>
+                    </div>
+                </div>
+                <p class="text-xs text-zinc-500">
+                    Las ubicaciones son aproximadas para visualización
+                    histórica.
+                </p>
+            </section>
+
             <!-- Nacimientos -->
             <section id="nacimientos" class="space-y-4">
                 <div class="flex items-end justify-between">
@@ -260,6 +299,10 @@
             </div>
         </footer>
 
+        <!-- Leaflet JS + Heat plugin (antes de tu script principal) -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
         <script>
             // ----- Datos -----
             const datosNacimientos = {
@@ -319,6 +362,90 @@
                 ],
                 values: [205, 99, 95, 82, 68, 64, 54, 56, 47, 46],
             };
+
+            // ----- Mapas (Leaflet) -----
+            const origen = [
+                { name: "Temuco", lat: -38.735, lng: -72.59, w: 205 },
+                { name: "Pitrufquén", lat: -39.233, lng: -72.65, w: 99 },
+                { name: "Osorno", lat: -40.574, lng: -73.133, w: 95 },
+                { name: "San Pablo", lat: -40.409, lng: -73.01, w: 82 },
+                { name: "Puerto Montt", lat: -41.471, lng: -72.942, w: 68 },
+                { name: "Victoria", lat: -38.232, lng: -72.332, w: 64 },
+                { name: "Lonquimay", lat: -38.433, lng: -71.233, w: 54 },
+                { name: "Boroa", lat: -38.9, lng: -72.8, w: 56 },
+                { name: "Chonchi", lat: -42.62, lng: -73.78, w: 47 },
+                { name: "Santa Bárbara", lat: -37.666, lng: -72.016, w: 46 },
+            ];
+
+            const destino = [
+                {
+                    name: "San Carlos de Bariloche",
+                    lat: -41.133,
+                    lng: -71.31,
+                    w: 539,
+                },
+                { name: "Pichi Leufú", lat: -41.2, lng: -70.65, w: 137 },
+                { name: "El Bolsón", lat: -41.967, lng: -71.533, w: 125 },
+                { name: "Ñorquinco", lat: -41.966, lng: -70.883, w: 108 },
+                { name: "Comallo", lat: -41.032, lng: -70.266, w: 91 },
+                { name: "Las Bayas", lat: -41.35, lng: -70.7, w: 90 },
+                { name: "Pilcaniyeu", lat: -41.116, lng: -70.723, w: 72 },
+                { name: "Cholila", lat: -42.517, lng: -71.433, w: 66 },
+                { name: "Epuyén", lat: -42.25, lng: -71.35, w: 43 },
+                {
+                    name: "16 de Octubre (Trevelin)",
+                    lat: -43.08,
+                    lng: -71.47,
+                    w: 35,
+                },
+            ];
+
+            function mkMap(elId, points, view) {
+                const m = L.map(elId, {
+                    zoomControl: false,
+                    attributionControl: true,
+                    dragging: false,
+                    scrollWheelZoom: false,
+                    doubleClickZoom: false,
+                    boxZoom: false,
+                    keyboard: false,
+                    tap: false,
+                    touchZoom: false,
+                }).setView(view.center, view.zoom);
+
+                const tiles = L.tileLayer(
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    {
+                        maxZoom: 18,
+                        attribution: "&copy; OpenStreetMap contrib.",
+                    },
+                ).addTo(m);
+
+                // Heatmap usando pesos "crudos" y max para escalar correctamente
+                const maxW = Math.max(...points.map((p) => p.w));
+                L.heatLayer(
+                    points.map((p) => [p.lat, p.lng, p.w]),
+                    { radius: 32, blur: 22, max: maxW },
+                ).addTo(m);
+
+                // Marcadores para ver/validar los puntos
+                points.forEach((p) => {
+                    L.circleMarker([p.lat, p.lng], {
+                        radius: 5,
+                        color: "#000",
+                        weight: 1,
+                        fillColor: "#ff5252",
+                        fillOpacity: 0.7,
+                        opacity: 0.6,
+                    })
+                        .addTo(m)
+                        .bindTooltip(`${p.name}: ${p.w}`, { direction: "top" });
+                });
+
+                // Asegurar cálculo correcto del tamaño
+                setTimeout(() => m.invalidateSize(), 100);
+                return m;
+            }
 
             // ----- Utilidad para crear datasets con estilos armonizados -----
             function baseBarDataset(values) {
@@ -387,6 +514,13 @@
 
             // ----- Render -----
             document.addEventListener("DOMContentLoaded", () => {
+                // Mapas
+                mkMap("mapOrigen", origen, { center: [-40.5, -72.8], zoom: 6 });
+                mkMap("mapDestino", destino, {
+                    center: [-41.5, -71.1],
+                    zoom: 6,
+                });
+
                 mkBar(
                     document.getElementById("chartNacimientos"),
                     datosNacimientos.labels,
